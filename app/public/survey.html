@@ -23,9 +23,9 @@
 
             <a class="btn btn-primary btn-lg" href="./tables" role="View Table">Survey</a><br>
 
-            <input type="text" name="Q1">Name(required)<br>
+            <input type="text" id="name" name="Q1">Name(required)<br>
             <form action="/action_page.php">
-            <input type="" name="Q1"> Photo<br>
+                <input type="" id="photo" name="Q1"> Photo<br>
 
                 <p>Do you like long walks on the beach?</p>
                 <input type="radio" id="Q1" value="1"> Strongly Agree<br>
@@ -102,6 +102,59 @@
 
         </div>
     </div>
+    <script>
+        //on click for form submit 
+        var userAnswers = document.forms[0];
+        console.log(document.forms)
+        var userAnswersArr = [];
+
+        if (userAnswersArr.length === 10) {
+            for (var i = 0; i < userAnswersArr.length; i++) {
+                if (userAnswersArr[i].checked) {
+                    userAnswersArr.push(userAnswersArr[i].value);
+                }
+            }
+            console.log(userAnswersArr)
+
+            var newFriend = {
+                name: 
+                $("#name").val().trim(),
+                photo:
+                $("#photo").val().trim(),
+                scores: userAnswersArr
+       }
+ }
+
+        //function to make sure there is inputs for each of the question
+        //if fields aren't all filled out alert the user
+
+
+        //if inputs for everything create object with users data (name, photo, scores);
+
+        var userAnswers = {
+            name: //value from form
+                photo: //value from form
+            score: [
+                $("#q1").val,
+                $("#q2").val,
+                $("#q3").val,
+                $("#q4").val,
+                $("#q5").val,
+                $("#q6").val,
+                $("#q7").val,
+                $("#q8").val,
+                $("#q9").val,
+                $("#q10").val,
+
+            ]
+        }
+
+        //ajax post request to the api route, sends he userData - this route needs to math the back end route
+        $.post("/api/friends", userAnswers, function (match) {
+
+            // get result that is returned from back end and display to use
+        })
+    </script>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
