@@ -3,8 +3,8 @@ var express = require("express");
 
 //tells node we are creating an "express" server
 var app = express();
-//sets an initila port. We'll use thi slater in our listener
-var PORT = process.env.PORT || 3000;
+//sets an initial port. We'll use this later in our listener
+var PORT = process.env.PORT || 8080;
 
 // middleware to interpret data
 app.use(express.urlencoded({ extended: true }));
