@@ -120,17 +120,40 @@
 
         </div>
     </div>
+    <script>
+     //on click for form submit
 
-    //on click for form submit
-    var userAnswers = document.forms[0];
-    console.log(userAnswers)
-    console.log(document.forms)
-    var userAnswersArr = [];
+     $("#submit").click(function (event) {
+         event.preventDefault()
+         var name = $("#name").val().trim();
+         var photo = $("#photo").val().trim();
+         var userAnswers = [
+             $("input[name='q1']:checked").val().trim(),
+             $("input[name='q2']:checked").val().trim(),
+             $("input[name='q3']:checked").val().trim(),
+             $("input[name='q4']:checked").val().trim(),
+             $("input[name='q5']:checked").val().trim(),
+             $("input[name='q6']:checked").val().trim(),
+             $("input[name='q7']:checked").val().trim(),
+             $("input[name='q8']:checked").val().trim(),
+             $("input[name='q9']:checked").val().trim(),
+             $("input[name='q10']:checked").val().trim(),
+         ]
+         console.log(userAnswers)
 
-    if (userAnswersArr.length === 10) {
-    for (var i = 0; i < userAnswersArr.length; i++) { if (userAnswersArr[i].checked) {
-        userAnswersArr.push(userAnswersArr[i].value); } } console.log(userAnswersArr) var newFriend={ name:
-        $("#name").val().trim(), photo: $("#photo").val().trim(), scores: userAnswersArr } } //function to make sure
-        there is inputs for each of the question //if fields aren't all filled out alert the user //if inputs for
-        everything create object with users data (name, photo, scores); $("#submit").click(function(event) {
-        event.preventDefault() var answers={ q1: $(".Q1") } console.log(answers) }) </script> </body> </html>
+         if (userAnswers.length === 10) {
+             var newFriend = {
+                 name: name,
+                 photo: photo,
+                 scores: userAnswers
+             }
+             console.log("newFriend: ", newFriend);
+
+             $.post("/api/friends", newFriend, function (match) {
+                 alert(match.name);
+             })
+         }
+     });
+     </script> 
+    </body> 
+    </html>
