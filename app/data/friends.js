@@ -51,3 +51,4 @@ var friends = [{
 
 ];
 
+module.exports = router;
