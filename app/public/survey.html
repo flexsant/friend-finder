@@ -24,6 +24,8 @@
 <body>
     <div class="container">
         <div class="jumbotron text-center">
+
+
             <h1 class="display-5">Friend Finder
             </h1>
             <h4 class="display-5">Please complete the following survey to find your best match!
@@ -41,8 +43,7 @@
                 <input type="radio" class="userPick" name="q1" value="2"> Agree<br>
                 <input type="radio" class="userPick" name="q1" value="3"> Mutually Agree<br>
                 <input type="radio" class="userPick" name="q1" value="4"> Disagree<br>
-                <input type="radio" class="userPick" name="q1"
-                value="5"> Strongly Disagree<br>
+                <input type="radio" class="userPick" name="q1" value="5"> Strongly Disagree<br>
 
                 <br>
                 <p>Does sleeping in appeal to you?</p>
@@ -98,8 +99,7 @@
                 <input type="radio" class="userPick" name="q8" value="2"> Agree<br>
                 <input type="radio" class="userPick" name="q8" value="3"> Mutually Agree<br>
                 <input type="radio" class="userPick" name="q8" value="4"> Disagree<br>
-                <input type="radio" class="userPick" name="q8"
-                value="5"> Strongly Disagree<br>
+                <input type="radio" class="userPick" name="q8" value="5"> Strongly Disagree<br>
 
                 <br>
                 <p>Do you take public transit to off-set your carbon footprint?</p>
@@ -107,13 +107,11 @@
                 <input type="radio" class="userPick" name="q9" value="2"> Agree<br>
                 <input type="radio" class="userPick" name="q9" value="3"> Mutually Agree<br>
                 <input type="radio" class="userPick" name="q9" value="4"> Disagree<br>
-                <input type="radio" class="userPick" name="q9"
-                value="5"> Strongly Disagree<br>
+                <input type="radio" class="userPick" name="q9" value="5"> Strongly Disagree<br>
 
                 <br>
                 <p>Are you looking for a partner who shares similar attributes as you?</p>
-                <input type="radio" class="userPick" name="q10"
-                value="1"> Strongly Agree<br>
+                <input type="radio" class="userPick" name="q10" value="1"> Strongly Agree<br>
                 <input type="radio" class="userPick" name="q10" value="2"> Agree<br>
                 <input type="radio" class="userPick" name="q10" value="3"> Mutually Agree<br>
                 <input type="radio" class="userPick" name="q10" value="4"> Disagree<br>
@@ -124,40 +122,64 @@
 
         </div>
     </div>
+    <!-- Modal -->
+    <div id="results-modal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button class="close" data-dismiss="modal">&times;</button>
+                    <h2 class="modal-title"><strong>Best Match</strong></h2>
+                </div>
+                <div class="modal-body">
+                    <h2 id="match-name"></h2>
+                    <img id="match-img"
+                        src="https://media.licdn.com/mpr/mpr/shrinknp_400_400/p/6/005/064/1bd/3435aa3.jpg" alt="">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
-     //on click for form submit
+        //on click for form submit
 
-     $("#submit").click(function (event) {
-         event.preventDefault()
-         var name = $("#name").val().trim();
-         var photo = $("#photo").val().trim();
-         var userAnswers = [
-             $("input[name='q1']:checked").val().trim(),
-             $("input[name='q2']:checked").val().trim(),
-             $("input[name='q3']:checked").val().trim(),
-             $("input[name='q4']:checked").val().trim(),
-             $("input[name='q5']:checked").val().trim(),
-             $("input[name='q6']:checked").val().trim(),
-             $("input[name='q7']:checked").val().trim(),
-             $("input[name='q8']:checked").val().trim(),
-             $("input[name='q9']:checked").val().trim(),
-             $("input[name='q10']:checked").val().trim(),
-         ]
-         console.log(userAnswers)
+        $("#submit").click(function (event) {
+            event.preventDefault()
+            var name = $("#name").val().trim();
+            var photo = $("#photo").val().trim();
+            var userAnswers = [
+                $("input[name='q1']:checked").val().trim(),
+                $("input[name='q2']:checked").val().trim(),
+                $("input[name='q3']:checked").val().trim(),
+                $("input[name='q4']:checked").val().trim(),
+                $("input[name='q5']:checked").val().trim(),
+                $("input[name='q6']:checked").val().trim(),
+                $("input[name='q7']:checked").val().trim(),
+                $("input[name='q8']:checked").val().trim(),
+                $("input[name='q9']:checked").val().trim(),
+                $("input[name='q10']:checked").val().trim(),
+            ]
+            console.log(userAnswers)
 
-         if (userAnswers.length === 10) {
-             var newFriend = {
-                 name: name,
-                 photo: photo,
-                 scores: userAnswers
-             }
-             console.log("newFriend: ", newFriend);
+            if (userAnswers.length === 10) {
+                var newFriend = {
+                    name: name,
+                    photo: photo,
+                    scores: userAnswers
+                }
+                console.log("newFriend: ", newFriend);
 
-             $.post("/api/friends", newFriend, function (match) {
-                 alert(match.name);
-             })
-         }
-     });
-     </script> 
-    </body> 
-    </html>
+                $.post("/api/friends", newFriend, function (match) {
+                    $("#match-name").text(match.name);
+                    $("#match-img").attr("src", match.photo);
+                    $("#results-modal").modal("toggle");
+
+                })
+            }
+        });
+    </script>
+</body>
+
+</html>
